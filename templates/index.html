@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Image Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="hack/favicon.png" alt="">
+            <span class="nav-title">Truth Shield</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active">Home</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+            <a href="#">News</a>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <div class="container">
+        <h1>Fake Image Detector</h1>
+        <div class="input-options">
+            <select id="inputType" onchange="handleInputChange()">
+                <option value="file">File</option>
+                <option value="webcam">Webcam</option>
+            </select>
+            <div id="fileInput" class="input-area">
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                <div class="upload-box" onclick="triggerFileUpload()">
+                    Choose images from your files, or drag & drop here
+                </div>
+            </div>
+            <div id="webcamInput" class="input-area" style="display: none;">
+                <button onclick="startWebcam()">Capture from Webcam</button>
+                <video id="webcamVideo" width="320" height="240" style="display: none;"></video>
+                <canvas id="webcamCanvas" width="224" height="224" style="display: none;"></canvas>
+                <button id="captureButton" onclick="captureWebcam()" style="display: none;">Capture</button>
+            </div>
+        </div>
+    
+        <button id="predictButton" onclick="uploadImage()" style="display: none;">Predict</button>
+        <button id="historyButton" onclick="showHistory()">View History</button>
+        <div id="predictionResult">
+            <div id="imagePreview" class="image-preview" style="display: none;">
+                <img id="previewImage" src="/placeholder.svg" alt="Image Preview">
+                <div id="confidenceOverlay" class="confidence-overlay"></div>
+            </div>
+            <label><input type="checkbox" id="overlayToggle" checked onchange="toggleOverlay()"> Show Confidence Overlay</label>
+            <p id="predictionText"></p>
+            <div id="confidenceProgress" class="progress-container" style="display: none;">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <div id="fakeResult" class="result-box fake" style="display: none;">Fake</div>
+            <div id="realResult" class="result-box real" style="display: none;">Real</div>
+        </div>
+        <div id="historyResult" style="display: none;">
+            <h3>Prediction History</h3>
+            <ul id="historyList"></ul>
+            <button onclick="showPrediction()">Back to Prediction</button>
+        </div>
+        <div id="loading" class="loading" style="display: none;"></div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
